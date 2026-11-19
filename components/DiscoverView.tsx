@@ -36,7 +36,7 @@ export function DiscoverView({ onGoToMatches, onMatchCreated }: DiscoverViewProp
   // Modals
   const [detailsProfile, setDetailsProfile] = useState<Profile | null>(null);
   const [recentMatchProfile, setRecentMatchProfile] = useState<Profile | null>(null);
-  const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
   // Fetch feed profiles on mount
   const fetchFeed = useCallback(async () => {
@@ -49,10 +49,10 @@ export function DiscoverView({ onGoToMatches, onMatchCreated }: DiscoverViewProp
         setProfiles(data.profiles || []);
         setCurrentIndex(0);
       } else {
-        setErrorMessage(data.error || 'Failed to load profile feed.');
+        setErrorMessage(data.error || 'Failed to load feed.');
       }
     } catch (err: any) {
-      setErrorMessage('Network error while loading profiles. Please check your connection.');
+      setErrorMessage('Network error while loading profiles.');
     } finally {
       setIsLoading(false);
     }
@@ -62,7 +62,6 @@ export function DiscoverView({ onGoToMatches, onMatchCreated }: DiscoverViewProp
     fetchFeed();
   }, [fetchFeed]);
 
-  // Current active profile
   const currentProfile = profiles[currentIndex];
   const nextProfile = profiles[currentIndex + 1];
 
@@ -112,10 +111,9 @@ export function DiscoverView({ onGoToMatches, onMatchCreated }: DiscoverViewProp
     [currentProfile, isSwipingInProgress, onMatchCreated]
   );
 
-  // Keyboard navigation: Left Arrow (Pass), Right Arrow (Like), Up/Space (Details)
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't intercept if an input is focused or a modal is open
       if (detailsProfile || recentMatchProfile) return;
 
       if (e.key === 'ArrowRight') {
@@ -154,13 +152,12 @@ export function DiscoverView({ onGoToMatches, onMatchCreated }: DiscoverViewProp
     if (!isDragging) return;
     setIsDragging(false);
 
-    const SWIPE_THRESHOLD = 90; // pixels to trigger like/pass
+    const SWIPE_THRESHOLD = 85;
     if (dragOffset.x > SWIPE_THRESHOLD) {
       handleSwipe('like');
     } else if (dragOffset.x < -SWIPE_THRESHOLD) {
       handleSwipe('pass');
     } else {
-      // Spring back to center
       setDragOffset({ x: 0, y: 0 });
     }
     dragStartRef.current = null;
@@ -174,68 +171,50 @@ export function DiscoverView({ onGoToMatches, onMatchCreated }: DiscoverViewProp
       await fetchFeed();
       onMatchCreated();
     } catch (err) {
-      setErrorMessage('Failed to reset demo state.');
+      setErrorMessage('Failed to reset demo.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex-1 flex flex-col p-4 relative select-none">
-      {/* Top Header Bar */}
-      <div className="flex justify-between items-center pb-3 border-b border-slate-800/80 mb-3">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center font-extrabold text-white text-sm shadow-md shadow-rose-500/20">
-            C
-          </div>
-          <div>
-            <h1 className="font-bold text-base tracking-tight text-white flex items-center gap-1.5">
-              <span>Discover</span>
-              <span className="text-[10px] font-semibold bg-rose-500/20 text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded-full">
-                Blind Feed
-              </span>
-            </h1>
-          </div>
+    <div className="flex-1 flex flex-col p-4 bg-white select-none overflow-hidden pb-20 text-gray-900">
+      {/* Top Header */}
+      <div className="flex justify-between items-center pb-2 mb-2">
+        <div className="flex items-center gap-1.5">
+          <span className="text-2xl font-black tracking-tight text-black">coy</span>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#ff2d6c] mt-1 inline-block" />
+          <span className="ml-2 text-xs font-black uppercase tracking-wider bg-gray-100 text-gray-700 px-2.5 py-0.5 rounded-full border border-gray-300">
+            Discover
+          </span>
         </div>
 
-        <div className="flex items-center gap-1">
-          <button
-            onClick={() => setShowKeyboardHelp(true)}
-            className="w-8 h-8 rounded-full bg-slate-800/60 hover:bg-slate-700/80 text-slate-400 hover:text-white flex items-center justify-center transition cursor-pointer"
-            title="Keyboard shortcuts & info"
-            aria-label="Keyboard shortcuts"
-          >
-            <HelpCircle className="w-4 h-4" />
-          </button>
-        </div>
+        <button
+          onClick={() => setShowHelp(true)}
+          className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition"
+          aria-label="Help"
+        >
+          <HelpCircle className="w-4 h-4" />
+        </button>
       </div>
 
-      {/* Error notification bar */}
       {errorMessage && (
-        <div className="mb-3 px-3.5 py-2 rounded-xl bg-rose-950/70 border border-rose-800/60 text-xs text-rose-300 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
-            <span>{errorMessage}</span>
-          </div>
-          <button
-            onClick={() => setErrorMessage(null)}
-            className="text-rose-400 hover:text-white text-xs font-bold px-1"
-          >
-            &times;
-          </button>
+        <div className="mb-2 px-3 py-2 rounded-xl bg-red-100 border border-red-300 text-xs font-bold text-red-700 flex items-center justify-between">
+          <span>{errorMessage}</span>
+          <button onClick={() => setErrorMessage(null)}>&times;</button>
         </div>
       )}
 
       {/* Main Discover Card Viewport */}
-      <div className="flex-1 relative flex flex-col items-center justify-center min-h-[460px]">
+      <div className="flex-1 relative flex flex-col items-center justify-center min-h-[440px]">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center space-y-3">
-            <div className="w-10 h-10 border-3 border-rose-500 border-t-transparent rounded-full animate-spin" />
-            <p className="text-xs text-slate-400">Loading secret crush feed...</p>
+            <div className="w-9 h-9 border-3 border-[#ff2d6c] border-t-transparent rounded-full animate-spin" />
+            <p className="text-xs font-bold text-gray-500">Loading confidential feed...</p>
           </div>
         ) : currentProfile ? (
           <div
-            className="relative w-full h-[500px] max-w-sm"
+            className="relative w-full h-[480px] max-w-sm"
             onMouseDown={(e) => handlePointerDown(e.clientX, e.clientY)}
             onMouseMove={(e) => handlePointerMove(e.clientX, e.clientY)}
             onMouseUp={handlePointerUp}
@@ -248,21 +227,19 @@ export function DiscoverView({ onGoToMatches, onMatchCreated }: DiscoverViewProp
             }
             onTouchEnd={handlePointerUp}
           >
-            {/* Background card preview for smooth 3D stack visual */}
+            {/* Background stack card */}
             {nextProfile && (
-              <div
-                className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden shadow-lg bg-slate-900 border border-slate-800 pointer-events-none transform scale-95 translate-y-3 opacity-60"
-              >
+              <div className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-black border-2 border-black pointer-events-none transform scale-95 translate-y-3 opacity-60">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={nextProfile.photo}
                   alt={nextProfile.name}
-                  className="w-full h-full object-cover filter blur-[1px]"
+                  className="w-full h-full object-cover filter blur-xs"
                 />
               </div>
             )}
 
-            {/* Top Active Card */}
+            {/* Active Card */}
             <ProfileCard
               profile={currentProfile}
               offsetX={dragOffset.x}
@@ -271,37 +248,30 @@ export function DiscoverView({ onGoToMatches, onMatchCreated }: DiscoverViewProp
             />
           </div>
         ) : (
-          /* Empty State — Feed Exhausted */
-          <div className="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-5 animate-fadeIn max-w-xs">
-            <div className="w-20 h-20 rounded-3xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-inner">
-              <Sparkles className="w-10 h-10 text-rose-500" />
+          /* Empty State */
+          <div className="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-4 max-w-xs animate-fadeIn">
+            <div className="w-20 h-20 rounded-3xl bg-[#ffeef3] border-2 border-black flex items-center justify-center coy-card-shadow">
+              <Sparkles className="w-10 h-10 text-[#ff2d6c]" />
             </div>
 
-            <div className="space-y-2">
-              <h3 className="text-lg font-bold text-white">You&apos;re All Caught Up!</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                You&apos;ve reviewed all available profiles for now. Don&apos;t worry—your swipes have been securely recorded with complete privacy.
+            <div className="space-y-1.5">
+              <h3 className="text-lg font-black text-black">All caught up!</h3>
+              <p className="text-xs text-gray-600 font-medium leading-relaxed">
+                You have reviewed all available profiles. All swipes are stored with 100% confidential privacy.
               </p>
             </div>
 
-            {/* Privacy Guarantee reminder */}
-            <div className="w-full p-3 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-[11px] text-slate-400 flex items-center gap-2 text-left">
-              <Shield className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Remember: If anyone you liked also likes you, you will see them in Matches.</span>
-            </div>
-
-            {/* Actions */}
-            <div className="w-full space-y-2.5 pt-2">
+            <div className="w-full space-y-2 pt-2">
               <button
                 onClick={onGoToMatches}
-                className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium text-xs shadow-md shadow-rose-500/20 transition cursor-pointer"
+                className="w-full py-3 px-4 rounded-2xl bg-[#ff2d6c] text-white font-extrabold text-xs border-2 border-black coy-btn-shadow transition cursor-pointer"
               >
-                View Your Mutual Matches
+                View Matches
               </button>
 
               <button
                 onClick={handleRestartDemo}
-                className="w-full py-2.5 px-4 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 font-medium text-xs flex items-center justify-center gap-1.5 transition cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-2xl bg-gray-100 hover:bg-gray-200 border-2 border-black text-black font-extrabold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>Reset Demo Feed</span>
@@ -311,45 +281,45 @@ export function DiscoverView({ onGoToMatches, onMatchCreated }: DiscoverViewProp
         )}
       </div>
 
-      {/* Swipe Action Controls (Bottom Bar) */}
+      {/* Swipe Action Buttons */}
       {currentProfile && (
-        <div className="pt-4 pb-2 flex items-center justify-center gap-6">
+        <div className="pt-3 pb-1 flex items-center justify-center gap-6">
           {/* Pass Button */}
           <button
             onClick={() => handleSwipe('pass')}
             disabled={isSwipingInProgress}
-            className="w-14 h-14 rounded-full bg-slate-900/90 border-2 border-slate-700/80 text-rose-500 hover:border-rose-500/80 hover:bg-rose-500/10 active:scale-90 transition-all duration-150 flex items-center justify-center shadow-lg disabled:opacity-50 cursor-pointer"
+            className="w-14 h-14 rounded-full bg-white border-2 border-black text-[#ff2d6c] hover:bg-red-50 coy-btn-shadow flex items-center justify-center transition disabled:opacity-50 cursor-pointer"
             title="Pass (Left Arrow)"
-            aria-label="Pass profile"
+            aria-label="Pass"
           >
-            <X className="w-7 h-7 stroke-[2.5]" />
+            <X className="w-7 h-7 stroke-[3]" />
           </button>
 
           {/* Details Button */}
           <button
             onClick={() => setDetailsProfile(currentProfile)}
             disabled={isSwipingInProgress}
-            className="w-10 h-10 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 active:scale-95 transition-all flex items-center justify-center shadow disabled:opacity-50 cursor-pointer"
-            title="View Details (Up Arrow)"
-            aria-label="Open profile details"
+            className="w-11 h-11 rounded-full bg-gray-100 border-2 border-black text-gray-800 hover:bg-gray-200 coy-btn-shadow flex items-center justify-center transition cursor-pointer"
+            title="Bio (Up Arrow)"
+            aria-label="Bio"
           >
-            <Info className="w-5 h-5" />
+            <Info className="w-5 h-5 stroke-[2.5]" />
           </button>
 
           {/* Like Button */}
           <button
             onClick={() => handleSwipe('like')}
             disabled={isSwipingInProgress}
-            className="w-14 h-14 rounded-full bg-gradient-to-tr from-rose-500 to-pink-600 text-white hover:from-rose-600 hover:to-pink-700 active:scale-90 transition-all duration-150 flex items-center justify-center shadow-lg shadow-rose-500/30 disabled:opacity-50 cursor-pointer"
+            className="w-14 h-14 rounded-full bg-[#ff2d6c] border-2 border-black text-white hover:bg-[#e01e5a] coy-btn-shadow flex items-center justify-center transition disabled:opacity-50 cursor-pointer"
             title="Like (Right Arrow)"
-            aria-label="Like profile"
+            aria-label="Like"
           >
             <Heart className="w-7 h-7 fill-white stroke-[2.5]" />
           </button>
         </div>
       )}
 
-      {/* Profile Details Modal */}
+      {/* Modals */}
       {detailsProfile && (
         <ProfileDetailsModal
           profile={detailsProfile}
@@ -365,7 +335,6 @@ export function DiscoverView({ onGoToMatches, onMatchCreated }: DiscoverViewProp
         />
       )}
 
-      {/* Mutual Match Modal Pop-Up */}
       {recentMatchProfile && (
         <MatchModal
           matchedProfile={recentMatchProfile}
@@ -377,53 +346,37 @@ export function DiscoverView({ onGoToMatches, onMatchCreated }: DiscoverViewProp
         />
       )}
 
-      {/* Keyboard Controls & Info Modal */}
-      {showKeyboardHelp && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-xs bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
-            <div className="flex justify-between items-center border-b border-slate-800 pb-2">
-              <h4 className="text-sm font-semibold text-white">Controls &amp; Gestures</h4>
+      {showHelp && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="w-full max-w-xs bg-white border-2 border-black rounded-3xl p-5 space-y-4 coy-card-shadow">
+            <div className="flex justify-between items-center border-b border-gray-100 pb-2">
+              <h4 className="font-extrabold text-sm text-black">Controls &amp; Gestures</h4>
               <button
-                onClick={() => setShowKeyboardHelp(false)}
-                className="text-slate-400 hover:text-white text-lg font-bold"
+                onClick={() => setShowHelp(false)}
+                className="text-gray-500 hover:text-black font-bold text-lg"
               >
                 &times;
               </button>
             </div>
-
-            <div className="space-y-2.5 text-xs text-slate-300">
-              <div className="flex items-center justify-between">
-                <span>Swipe / Drag Right</span>
-                <span className="font-semibold text-emerald-400">Like</span>
+            <div className="space-y-2 text-xs font-semibold text-gray-700">
+              <div className="flex justify-between">
+                <span>Drag Right / &rarr;</span>
+                <span className="text-emerald-600 font-extrabold">Like</span>
               </div>
-              <div className="flex items-center justify-between">
-                <span>Swipe / Drag Left</span>
-                <span className="font-semibold text-rose-400">Pass</span>
+              <div className="flex justify-between">
+                <span>Drag Left / &larr;</span>
+                <span className="text-[#ff2d6c] font-extrabold">Pass</span>
               </div>
-              <div className="flex items-center justify-between">
-                <span>Key &rarr; (Right Arrow)</span>
-                <span className="font-semibold text-emerald-400">Like</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span>Key &larr; (Left Arrow)</span>
-                <span className="font-semibold text-rose-400">Pass</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span>Key &uarr; (Up Arrow) / Space</span>
-                <span className="font-semibold text-slate-200">View Bio</span>
+              <div className="flex justify-between">
+                <span>&uarr; / Space</span>
+                <span className="text-gray-900 font-extrabold">View Bio</span>
               </div>
             </div>
-
-            <div className="pt-2 border-t border-slate-800 text-[11px] text-slate-400">
-              <p className="font-medium text-slate-300 mb-1">Coy Privacy Guarantee:</p>
-              Profiles never know you liked them unless they also liked you back.
-            </div>
-
             <button
-              onClick={() => setShowKeyboardHelp(false)}
-              className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-medium transition cursor-pointer"
+              onClick={() => setShowHelp(false)}
+              className="w-full py-2.5 bg-black text-white rounded-xl text-xs font-bold"
             >
-              Got it
+              Close
             </button>
           </div>
         </div>

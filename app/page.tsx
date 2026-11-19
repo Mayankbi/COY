@@ -5,12 +5,12 @@ import { HomeView } from '@/components/HomeView';
 import { DiscoverView } from '@/components/DiscoverView';
 import { MatchesView } from '@/components/MatchesView';
 import { Profile } from '@/lib/types';
-import { Home, Compass, Heart, Shield } from 'lucide-react';
+import { Home, Compass, Heart } from 'lucide-react';
 
 type TabType = 'home' | 'discover' | 'matches';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabType>('discover');
+  const [activeTab, setActiveTab] = useState<TabType>('home');
   const [matches, setMatches] = useState<
     Array<{ id: string; profile: Profile; matchedAt: string }>
   >([]);
@@ -38,7 +38,7 @@ export default function App() {
   }, [fetchMatches]);
 
   return (
-    <div className="flex flex-col h-screen w-full select-none overflow-hidden bg-[#121624]">
+    <div className="flex flex-col h-screen w-full select-none overflow-hidden bg-white">
       {/* Dynamic Main Body Content */}
       <main className="flex-1 flex flex-col overflow-hidden relative">
         {activeTab === 'home' && (
@@ -66,35 +66,35 @@ export default function App() {
       </main>
 
       {/* Mobile-First Bottom Navigation Bar */}
-      <nav className="h-16 bg-[#0e111c] border-t border-slate-800/80 px-6 flex items-center justify-around z-30 shrink-0">
+      <nav className="h-16 bg-white border-t-2 border-gray-100 px-6 flex items-center justify-around z-30 shrink-0">
         {/* Home Tab */}
         <button
           onClick={() => setActiveTab('home')}
           className={`flex flex-col items-center justify-center gap-1 transition-all duration-150 cursor-pointer ${
             activeTab === 'home'
-              ? 'text-rose-500 scale-105'
-              : 'text-slate-500 hover:text-slate-300'
+              ? 'text-[#ff2d6c] scale-105 font-bold'
+              : 'text-gray-400 hover:text-gray-700 font-semibold'
           }`}
           aria-label="Home tab"
         >
-          <Home className="w-5 h-5 stroke-[2]" />
-          <span className="text-[10px] font-semibold tracking-wider uppercase">Home</span>
+          <Home className="w-5 h-5 stroke-[2.2]" />
+          <span className="text-[10px] tracking-wider uppercase">Home</span>
         </button>
 
-        {/* Discover Tab (Main Feature) */}
+        {/* Discover Tab */}
         <button
           onClick={() => setActiveTab('discover')}
           className={`flex flex-col items-center justify-center gap-1 transition-all duration-150 cursor-pointer relative ${
             activeTab === 'discover'
-              ? 'text-rose-500 scale-105'
-              : 'text-slate-500 hover:text-slate-300'
+              ? 'text-[#ff2d6c] scale-105 font-bold'
+              : 'text-gray-400 hover:text-gray-700 font-semibold'
           }`}
           aria-label="Discover tab"
         >
-          <Compass className="w-5 h-5 stroke-[2]" />
-          <span className="text-[10px] font-semibold tracking-wider uppercase">Discover</span>
+          <Compass className="w-5 h-5 stroke-[2.2]" />
+          <span className="text-[10px] tracking-wider uppercase">Discover</span>
           {activeTab === 'discover' && (
-            <span className="absolute -bottom-1 w-1 h-1 rounded-full bg-rose-500" />
+            <span className="absolute -bottom-1 w-1.5 h-1.5 rounded-full bg-[#ff2d6c]" />
           )}
         </button>
 
@@ -103,22 +103,22 @@ export default function App() {
           onClick={() => setActiveTab('matches')}
           className={`flex flex-col items-center justify-center gap-1 transition-all duration-150 cursor-pointer relative ${
             activeTab === 'matches'
-              ? 'text-rose-500 scale-105'
-              : 'text-slate-500 hover:text-slate-300'
+              ? 'text-[#ff2d6c] scale-105 font-bold'
+              : 'text-gray-400 hover:text-gray-700 font-semibold'
           }`}
           aria-label="Matches tab"
         >
           <div className="relative">
-            <Heart className="w-5 h-5 stroke-[2]" />
+            <Heart className="w-5 h-5 stroke-[2.2]" />
             {matches.length > 0 && (
-              <span className="absolute -top-1.5 -right-2 bg-rose-500 text-white text-[9px] font-extrabold px-1 rounded-full min-w-4 text-center leading-tight shadow">
+              <span className="absolute -top-1.5 -right-2.5 bg-[#ff2d6c] text-white text-[9px] font-black px-1.5 rounded-full min-w-4 text-center leading-tight border border-white">
                 {matches.length}
               </span>
             )}
           </div>
-          <span className="text-[10px] font-semibold tracking-wider uppercase">Matches</span>
+          <span className="text-[10px] tracking-wider uppercase">Matches</span>
           {activeTab === 'matches' && (
-            <span className="absolute -bottom-1 w-1 h-1 rounded-full bg-rose-500" />
+            <span className="absolute -bottom-1 w-1.5 h-1.5 rounded-full bg-[#ff2d6c]" />
           )}
         </button>
       </nav>
