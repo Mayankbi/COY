@@ -87,7 +87,16 @@ export function DiscoverView({ onGoToMatches, onMatchCreated }: DiscoverViewProp
           })
         });
 
-        const data: SwipeResponse = await res.json();
+        const data: SwipeResponse & { error?: string } = await res.json().catch(() => ({
+          success: false
+        } as SwipeResponse & { error?: string }));
+
+        if (!res.ok || data.success === false) {
+          setErrorMessage(data.error || 'Failed to submit swipe. Please try again.');
+          setDragOffset({ x: 0, y: 0 });
+          setIsSwipingInProgress(false);
+          return;
+        }
 
         // Advance to next card smoothly after animation
         setTimeout(() => {

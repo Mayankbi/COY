@@ -7,8 +7,8 @@ import { X, MapPin, Sparkles, Heart, ShieldCheck } from 'lucide-react';
 interface ProfileDetailsModalProps {
   profile: Profile;
   onClose: () => void;
-  onLike: () => void;
-  onPass: () => void;
+  onLike?: () => void;
+  onPass?: () => void;
 }
 
 export function ProfileDetailsModal({
@@ -90,30 +90,31 @@ export function ProfileDetailsModal({
           </div>
         </div>
 
-        {/* Modal Action Footer */}
-        <div className="p-4 bg-white border-t border-gray-200 flex items-center justify-center gap-4">
-          <button
-            onClick={() => {
-              onClose();
-              onPass();
-            }}
-            className="flex-1 py-3.5 px-4 rounded-2xl bg-white border-2 border-black text-black font-extrabold text-sm coy-btn-shadow flex items-center justify-center gap-1.5 transition cursor-pointer"
-          >
-            <X className="w-4 h-4 text-[#ff2d6c] stroke-[3]" />
-            Pass
-          </button>
+        {onLike && onPass && (
+          <div className="p-4 bg-white border-t border-gray-200 flex items-center justify-center gap-4">
+            <button
+              onClick={() => {
+                onClose();
+                onPass();
+              }}
+              className="flex-1 py-3.5 px-4 rounded-2xl bg-white border-2 border-black text-black font-extrabold text-sm coy-btn-shadow flex items-center justify-center gap-1.5 transition cursor-pointer"
+            >
+              <X className="w-4 h-4 text-[#ff2d6c] stroke-[3]" />
+              Pass
+            </button>
 
-          <button
-            onClick={() => {
-              onClose();
-              onLike();
-            }}
-            className="flex-1 py-3.5 px-4 rounded-2xl bg-[#ff2d6c] hover:bg-[#e01e5a] text-white font-extrabold text-sm border-2 border-black coy-btn-shadow flex items-center justify-center gap-1.5 transition cursor-pointer"
-          >
-            <Heart className="w-4 h-4 fill-white stroke-[2.5]" />
-            Like
-          </button>
-        </div>
+            <button
+              onClick={() => {
+                onClose();
+                onLike();
+              }}
+              className="flex-1 py-3.5 px-4 rounded-2xl bg-[#ff2d6c] hover:bg-[#e01e5a] text-white font-extrabold text-sm border-2 border-black coy-btn-shadow flex items-center justify-center gap-1.5 transition cursor-pointer"
+            >
+              <Heart className="w-4 h-4 fill-white stroke-[2.5]" />
+              Like
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
