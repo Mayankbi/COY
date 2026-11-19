@@ -1,0 +1,290 @@
+import { Profile } from './types';
+
+// Deterministic seed profiles with high quality Unsplash portraits and diverse interests
+export const SEED_PROFILES: Profile[] = [
+  {
+    id: 'user-01',
+    name: 'Aanya Sharma',
+    age: 23,
+    photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+    bio: 'Architecture grad @ Columbia. Big on 35mm film, jazz bars, and finding the best sourdough in NYC.',
+    location: 'Columbia University, NYC',
+    interests: ['Film Photography', 'Architecture', 'Jazz', 'Baking', 'Museums']
+  },
+  {
+    id: 'user-02',
+    name: 'Lucas Vance',
+    age: 24,
+    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+    bio: 'Software engineer & weekend rock climber. Probably listening to French house or roasting coffee.',
+    location: 'San Francisco, CA',
+    interests: ['Bouldering', 'Specialty Coffee', 'Electronic Music', 'Open Source', 'Trail Running']
+  },
+  {
+    id: 'user-03',
+    name: 'Maya Patel',
+    age: 22,
+    photo: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80',
+    bio: 'Bioengineering senior @ Berkeley. Passionate about climate tech, thrift fashion, and spicy ramen.',
+    location: 'UC Berkeley',
+    interests: ['Climate Tech', 'Thrifting', 'Ramen', 'Pottery', 'Hiking']
+  },
+  {
+    id: 'user-04',
+    name: 'Julian Chen',
+    age: 25,
+    photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
+    bio: 'Product designer. Will debate typography hierarchies over matcha. Learning to surf badly.',
+    location: 'Austin, TX',
+    interests: ['UI/UX', 'Matcha', 'Surfing', 'Vinyl Records', 'Modern Art']
+  },
+  {
+    id: 'user-05',
+    name: 'Elena Rostova',
+    age: 23,
+    photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80',
+    bio: 'Literature & Philosophy student. Book hoarder, museum stroller, and obsessed with old bookstores.',
+    location: 'NYU, New York',
+    interests: ['Russian Lit', 'Philosophy', 'Art Galleries', 'Black Coffee', 'Vintage Cinema']
+  },
+  {
+    id: 'user-06',
+    name: 'Marcus Bell',
+    age: 26,
+    photo: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80',
+    bio: 'Indie game developer & synthesizer tinkerer. Looking for someone to co-op Overcooked without yelling.',
+    location: 'Seattle, WA',
+    interests: ['Game Design', 'Synthesizers', 'Pixel Art', 'Sci-Fi', 'Board Games']
+  },
+  {
+    id: 'user-07',
+    name: 'Sophia Martinez',
+    age: 22,
+    photo: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80',
+    bio: 'Pre-law @ Georgetown. Fluent in sarcasm, debate, and finding underground standup comedy spots.',
+    location: 'Georgetown University',
+    interests: ['Mock Trial', 'Standup Comedy', 'Podcasts', 'Tennis', 'Tacos']
+  },
+  {
+    id: 'user-08',
+    name: 'Liam Gallagher',
+    age: 24,
+    photo: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80',
+    bio: 'Acoustic guitar player, environmental scientist, and lover of national parks. Ask me about fungi.',
+    location: 'Boulder, CO',
+    interests: ['Mycology', 'Folk Music', 'Backpacking', 'Campfires', 'Dog Training']
+  },
+  {
+    id: 'user-09',
+    name: 'Zoe Nakamura',
+    age: 23,
+    photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80',
+    bio: 'Graphic artist & animator. Collecting obscure stationery and searching for the creamiest gelato.',
+    location: 'UCLA, Los Angeles',
+    interests: ['Animation', 'Illustration', 'Japanese Cinema', 'Matcha Latte', 'Rollerblading']
+  },
+  {
+    id: 'user-10',
+    name: 'Devon Walker',
+    age: 25,
+    photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80',
+    bio: 'Urban planner by day, mixologist by night. Obsessed with bikeable cities and street photography.',
+    location: 'Chicago, IL',
+    interests: ['Urbanism', 'Mixology', 'Cycling', 'Street Art', 'House Music']
+  },
+  {
+    id: 'user-11',
+    name: 'Camila Reyes',
+    age: 21,
+    photo: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80',
+    bio: 'Journalism major @ UT Austin. Telling stories that matter, eating breakfast tacos anytime of day.',
+    location: 'UT Austin',
+    interests: ['Journalism', 'Docuseries', 'Live Music', 'Tacos', 'Writing']
+  },
+  {
+    id: 'user-12',
+    name: 'Noah Sterling',
+    age: 24,
+    photo: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=800&q=80',
+    bio: 'Financial analyst who secretly writes fiction at night. marathon runner and chess nerd.',
+    location: 'Boston, MA',
+    interests: ['Marathon Running', 'Chess', 'Creative Writing', 'Podcasts', 'History']
+  },
+  {
+    id: 'user-13',
+    name: 'Priya Nair',
+    age: 23,
+    photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
+    bio: 'Data scientist & amateur baker. Can predict your mood with an ML model or with a freshly baked tart.',
+    location: 'Georgia Tech, Atlanta',
+    interests: ['Machine Learning', 'Pastry', 'Formula 1', 'Board Games', 'Sci-Fi Books']
+  },
+  {
+    id: 'user-14',
+    name: 'Ethan Brooks',
+    age: 25,
+    photo: 'https://images.unsplash.com/photo-1480429370139-e0132c086e2a?auto=format&fit=crop&w=800&q=80',
+    bio: 'Documentary filmmaker. Travelled to 28 countries, always looking for unique folklore stories.',
+    location: 'Los Angeles, CA',
+    interests: ['Documentary', 'Travel', 'Surfing', 'Scuba Diving', 'Storytelling']
+  },
+  {
+    id: 'user-15',
+    name: 'Chloe Dubois',
+    age: 22,
+    photo: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80',
+    bio: 'Exchange student from Lyon studying Fashion Design @ Parsons. Vintage stores are my second home.',
+    location: 'Parsons School of Design, NYC',
+    interests: ['Fashion Design', 'Textiles', 'French Cinema', 'Croissants', 'Art History']
+  },
+  {
+    id: 'user-16',
+    name: 'Tariq Al-Mansoor',
+    age: 26,
+    photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80',
+    bio: 'Med resident who runs on black coffee and adrenaline. Lifelong basketball enthusiast and avid reader.',
+    location: 'Johns Hopkins, Baltimore',
+    interests: ['Medicine', 'Basketball', 'Classical Piano', 'Neuroscience', 'Coffee']
+  },
+  {
+    id: 'user-17',
+    name: 'Hanna Lindstrom',
+    age: 24,
+    photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80',
+    bio: 'Nordic minimalist living in Portland. Woodworking hobbyist and sourdough enthusiast.',
+    location: 'Portland, OR',
+    interests: ['Woodworking', 'Minimalism', 'Forest Bathing', 'Ceramics', 'Tea Ceremonies']
+  },
+  {
+    id: 'user-18',
+    name: 'Kai Takahashi',
+    age: 23,
+    photo: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80',
+    bio: 'Robotics engineer @ MIT. Building humanoid prosthetics. In love with anime OSTs and stargazing.',
+    location: 'MIT, Cambridge',
+    interests: ['Robotics', 'Astronomy', 'Anime', 'Synthwave', 'Calisthenics']
+  },
+  {
+    id: 'user-19',
+    name: 'Mia Rossi',
+    age: 22,
+    photo: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80',
+    bio: 'Culinary arts student. My life goal is finding the perfect balance between acidity and olive oil.',
+    location: 'San Diego, CA',
+    interests: ['Gastronomy', 'Wine Tasting', 'Italian Cuisine', 'Beach Volleyball', 'Gardening']
+  },
+  {
+    id: 'user-20',
+    name: 'Oliver Thorne',
+    age: 27,
+    photo: 'https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=800&q=80',
+    bio: 'History professor in training @ Oxford. Always up for debating Renaissance history or pub trivia.',
+    location: 'Ann Arbor, MI',
+    interests: ['History', 'Pub Trivia', 'Archery', 'Folk Lore', 'Antique Maps']
+  },
+  {
+    id: 'user-21',
+    name: 'Serena Gomez',
+    age: 23,
+    photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+    bio: 'Choreographer and contemporary dancer. Lover of sunsets, golden hour photography, and cold brew.',
+    location: 'Miami, FL',
+    interests: ['Dance', 'Yoga', 'Sunsets', 'Contemporary Art', 'Latin Music']
+  },
+  {
+    id: 'user-22',
+    name: 'Dante Moretti',
+    age: 25,
+    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+    bio: 'Coffee roaster and motorcycle enthusiast. Can talk for two hours about single-origin Ethiopian beans.',
+    location: 'Denver, CO',
+    interests: ['Motorcycles', 'Specialty Coffee', 'Camping', 'Acoustic Blues', 'Woodcraft']
+  },
+  {
+    id: 'user-23',
+    name: 'Ananya Roy',
+    age: 22,
+    photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80',
+    bio: 'Cognitive science researcher @ Stanford. Fascination with memory, lucid dreaming, and indie cinema.',
+    location: 'Stanford University',
+    interests: ['Cognitive Science', 'Neurobiology', 'Indie Movies', 'Baking', 'Badminton']
+  },
+  {
+    id: 'user-24',
+    name: 'Zachary King',
+    age: 24,
+    photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
+    bio: 'Sound designer for VR experiences. When not behind headphones, I am tending to my 40 house plants.',
+    location: 'Toronto, ON',
+    interests: ['Sound Design', 'Plant Care', 'VR', 'Ambient Music', 'Cycling']
+  },
+  {
+    id: 'user-25',
+    name: 'Isabella Cruz',
+    age: 23,
+    photo: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80',
+    bio: 'Environmental law advocate. Lover of paddle boarding, farmer markets, and Golden Retrievers.',
+    location: 'Seattle, WA',
+    interests: ['Environmental Law', 'Kayaking', 'Dogs', 'Farmers Markets', 'Sustainability']
+  },
+  {
+    id: 'user-26',
+    name: 'Samir Patel',
+    age: 26,
+    photo: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80',
+    bio: 'Fintech product lead and amateur jazz trumpeter. Let’s grab tacos and talk about weird economics.',
+    location: 'New York, NY',
+    interests: ['Trumpet', 'Fintech', 'Tacos', 'Economics', 'Podcasting']
+  },
+  {
+    id: 'user-27',
+    name: 'Freja Nielsen',
+    age: 22,
+    photo: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80',
+    bio: 'Industrial design student. Minimalist aesthetics, Scandinavian design, and cold plunging.',
+    location: 'Chicago, IL',
+    interests: ['Industrial Design', 'Sauna', 'Cold Plunge', 'Ceramics', 'Nordic Noir']
+  },
+  {
+    id: 'user-28',
+    name: 'Leo Morales',
+    age: 25,
+    photo: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80',
+    bio: 'Barista champion & vinyl record collector. Finding hidden gem thrift stores across the city.',
+    location: 'Austin, TX',
+    interests: ['Vinyl', 'Latte Art', 'Vintage Clothing', 'Street Skating', 'Analog Synthesizers']
+  },
+  {
+    id: 'user-29',
+    name: 'Nadia Volkova',
+    age: 24,
+    photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
+    bio: 'Astrophysics PhD student. When I am not looking at distant galaxies, I am training for a half marathon.',
+    location: 'Princeton University',
+    interests: ['Astrophysics', 'Half Marathon', 'Telescopes', 'Sourdough', 'Classical Music']
+  },
+  {
+    id: 'user-30',
+    name: 'George Washington Bennett',
+    age: 25,
+    photo: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=800&q=80',
+    bio: 'High school science teacher and board game enthusiast. Always ready for a Catan marathon.',
+    location: 'Boston, MA',
+    interests: ['Board Games', 'Teaching', 'Science Trivia', 'Brewing Kombucha', 'Hiking']
+  }
+];
+
+// Profiles that deterministically have already liked the demo user (demo-user-id).
+// When the demo user likes any of these profiles, a MUTUAL MATCH is created.
+// If the demo user passes them, NO MATCH is created, and the user NEVER finds out they liked them.
+// NOTE: This list is STRICTLY INTERNAL on the backend and NEVER exposed in any API.
+export const INITIAL_PRE_LIKED_PROFILES = [
+  'user-01', // Aanya Sharma
+  'user-03', // Maya Patel
+  'user-05', // Elena Rostova
+  'user-09', // Zoe Nakamura
+  'user-15', // Chloe Dubois
+  'user-21', // Serena Gomez
+  'user-23', // Ananya Roy
+  'user-27'  // Freja Nielsen
+];
