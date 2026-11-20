@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node scripts/test-privacy-and-matching.mjs"
+    "test": "tsx scripts/test-privacy-and-matching.ts"
   },
   "dependencies": {
     "lucide-react": "^1.16.0",

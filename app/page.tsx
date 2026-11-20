@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { HomeView } from '@/components/HomeView';
 import { DiscoverView } from '@/components/DiscoverView';
 import { MatchesView } from '@/components/MatchesView';
+import { ProfileDetailsModal } from '@/components/ProfileDetailsModal';
 import { Profile } from '@/lib/types';
 import { Home, Compass, Heart } from 'lucide-react';
 
@@ -122,6 +123,13 @@ export default function App() {
           )}
         </button>
       </nav>
+
+      {activeProfileForModal && (
+        <ProfileDetailsModal
+          profile={activeProfileForModal}
+          onClose={() => setActiveProfileForModal(null)}
+        />
+      )}
     </div>
   );
 }
